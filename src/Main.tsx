@@ -1,9 +1,9 @@
 import { GridHelper, Object3D, Vector2, Vector3 } from "three";
-import React, { FC, createContext, useEffect, useRef } from "react";
+import React, { FC, createContext, useRef } from "react";
 
 import AvatarManager from "./three/AvatarManager";
-import DebugUI from "./three/ui/debugUI";
 import Mirror from "./three/Mirror";
+import { useStart } from "./hooks/useStart";
 import { useThree } from "react-three-fiber";
 
 export const ContainerContext = createContext<Object3D>(null as any);
@@ -12,12 +12,12 @@ const Main: FC = () => {
   const { scene } = useThree();
   const containerRef = useRef(new Object3D());
 
-  useEffect(() => {
+  useStart(() => {
     const container = containerRef.current;
     scene.add(containerRef.current);
     const gridHelper = new GridHelper(10, 10);
     container.add(gridHelper);
-  }, [scene]);
+  });
 
   return (
     <ContainerContext.Provider value={containerRef.current}>

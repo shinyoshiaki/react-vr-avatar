@@ -1,8 +1,9 @@
-import React, { FC, Fragment, useContext, useEffect, useMemo } from "react";
+import React, { FC, Fragment, useContext, useMemo } from "react";
 import { useFrame, useThree } from "react-three-fiber";
 
 import AvatarManagerClass from "./avatarManager.class";
 import { ContainerContext } from "../Main";
+import { useStart } from "../hooks/useStart";
 
 const AvatarManager: FC = () => {
   const { camera, gl } = useThree();
@@ -12,9 +13,9 @@ const AvatarManager: FC = () => {
     [container, camera, gl]
   );
 
-  useEffect(() => {
+  useStart(() => {
     avatarManager.load();
-  }, [avatarManager]);
+  });
 
   useFrame(() => {
     avatarManager.frameUpdate();
