@@ -17,7 +17,7 @@ const Main: FC = () => {
     scene.add(containerRef.current);
     const gridHelper = new GridHelper(10, 10);
     container.add(gridHelper);
-  }, []);
+  }, [scene]);
 
   return (
     <ContainerContext.Provider value={containerRef.current}>

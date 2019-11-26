@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 import { Color, FrontSide, Material, Vector2, Vector3 } from "three";
-import React, { FC, Fragment, useContext, useEffect } from "react";
+import React, { FC, Fragment, useContext, useRef } from "react";
 
 import { ContainerContext } from "../Main";
 import { Reflector } from "three/examples/jsm/objects/Reflector";
@@ -11,8 +11,9 @@ const Mirror: FC<{ size: Vector2; position: Vector3 }> = ({
   size
 }) => {
   const container = useContext(ContainerContext);
+  const first = useRef(true);
 
-  useEffect(() => {
+  if (first.current) {
     const geometry = new THREE.PlaneBufferGeometry(size.x, size.y).applyMatrix(
       new THREE.Matrix4().makeTranslation(0, 1, 0)
     );
@@ -28,7 +29,11 @@ const Mirror: FC<{ size: Vector2; position: Vector3 }> = ({
 
     mesh.position.set(position.x, position.y, position.z);
     container.add(mesh);
-  }, []);
+
+    {
+      first.current = false;
+    }
+  }
 
   return <Fragment />;
 };
