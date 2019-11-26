@@ -1,7 +1,7 @@
 import { GridHelper, Object3D, Vector2, Vector3 } from "three";
 import React, { FC, createContext, useEffect, useRef } from "react";
 
-import AvatarManager from "./three/Avatar";
+import AvatarManager from "./three/AvatarManager";
 import DebugUI from "./three/ui/debugUI";
 import Mirror from "./three/Mirror";
 import { useThree } from "react-three-fiber";
