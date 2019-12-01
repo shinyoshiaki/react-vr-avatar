@@ -1,24 +1,22 @@
-import React, { FC, Fragment, useContext, useMemo } from "react";
+import React, { FC, Fragment, useContext } from "react";
 import { useFrame, useThree } from "react-three-fiber";
 
 import AvatarManagerClass from "./avatarManager.class";
 import { ContainerContext } from "../Main";
+import { useInstance } from "../hooks/useInstance";
 import { useStart } from "../hooks/useStart";
 
 const AvatarManager: FC = () => {
   const { camera, gl } = useThree();
   const container = useContext(ContainerContext);
-  const avatarManager = useMemo(
-    () => new AvatarManagerClass(container, camera, gl),
-    [container, camera, gl]
-  );
+  const [avatar] = useInstance(new AvatarManagerClass(container, camera, gl));
 
   useStart(() => {
-    avatarManager.load();
+    avatar.load();
   });
 
   useFrame(() => {
-    avatarManager.frameUpdate();
+    avatar.frameUpdate();
   });
 
   return <Fragment />;
