@@ -14,11 +14,11 @@ export class SnapRotation {
     } else {
       if (padX > 0.9) {
         this.state.snapping = true;
-        this.container.rotateY(45);
+        this.container.rotateY(Math.PI / 4);
       }
       if (padX < -0.9) {
         this.state.snapping = true;
-        this.container.rotateY(-45);
+        this.container.rotateY(-Math.PI / 4);
       }
     }
   }

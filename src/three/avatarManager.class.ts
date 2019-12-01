@@ -34,7 +34,6 @@ export default class AvatarManagerClass {
     });
     this.params.heightFactor = getHeightFactor(avatar.height);
     this.container.scale.set(1, 1, 1).divideScalar(this.params.heightFactor);
-
     this.avatar = avatar;
   };
 
@@ -43,19 +42,13 @@ export default class AvatarManagerClass {
     const { avatar, camera, container, locomotion, gl } = this;
     if (!avatar) return;
 
-    camera.matrixWorld.decompose(
-      camera.position,
-      camera.quaternion,
-      camera.scale
-    );
-
     avatar.inputs.hmd.position
       .copy(camera.position)
       .sub(container.position)
       .multiplyScalar(heightFactor);
     avatar.inputs.hmd.quaternion.copy(camera.quaternion);
 
-    // left hand
+    // right hand
     const rightInput = getRightInput();
     if (rightInput) {
       const { pointer, grip, padX, padY, stick } = rightInput;
@@ -73,6 +66,13 @@ export default class AvatarManagerClass {
       );
 
       this.snapRotation.update(padX);
+      locomotion.update(
+        padX,
+        padY,
+        stick,
+        avatar.inputs.hmd.quaternion,
+        avatar.height
+      );
     }
 
     // left hand
