@@ -5,12 +5,11 @@ import { getLeftInput, getRightInput } from "./controller";
 
 import AVATAR from "https://avatars.exokit.org/avatars.js";
 import { Locomotion } from "./locomotion";
-import { SnapRotation } from "./snapRotation";
 
 export default class AvatarManagerClass {
   avatar?: Avatar;
   locomotion: Locomotion;
-  snapRotation: SnapRotation;
+
   params = { heightFactor: 0 };
 
   constructor(
@@ -19,7 +18,6 @@ export default class AvatarManagerClass {
     private gl: WebGLRenderer
   ) {
     this.locomotion = new Locomotion(container);
-    this.snapRotation = new SnapRotation(container);
   }
 
   load = async () => {
@@ -65,7 +63,6 @@ export default class AvatarManagerClass {
           .multiplyScalar(heightFactor)
       );
 
-      this.snapRotation.update(padX);
       locomotion.update(
         padX,
         padY,
