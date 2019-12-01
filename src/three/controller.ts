@@ -1,11 +1,12 @@
 export function getRightInput() {
-  const hand = getInput("left");
+  const hand = getInput("right");
+  console.log(hand);
   if (hand) return { ...hand };
   return undefined;
 }
 
 export function getLeftInput() {
-  const hand = getInput("right");
+  const hand = getInput("left");
   if (hand) return { ...hand };
   return undefined;
 }
@@ -22,13 +23,6 @@ function getInput(target: "right" | "left") {
   }
 
   if (!gamepad) return undefined;
-
-  console.log(
-    gamepad.buttons.reduce((acc, cur, i) => {
-      acc[i] = cur.value;
-      return acc;
-    }, {} as any)
-  );
 
   const pointer = gamepad.buttons[1].value;
   const grip = gamepad.buttons[2].value;

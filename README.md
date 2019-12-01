@@ -1,2 +1,1 @@
-# react-typescript-boilerplate
-webpack + react + typescript + babel + storybook
+<https://github.com/shinyoshiaki/react-vr-avatar>

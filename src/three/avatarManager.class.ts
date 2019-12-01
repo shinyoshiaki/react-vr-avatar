@@ -5,10 +5,12 @@ import { getLeftInput, getRightInput } from "./controller";
 
 import AVATAR from "https://avatars.exokit.org/avatars.js";
 import { Locomotion } from "./locomotion";
+import { SnapRotation } from "./snapRotation";
 
 export default class AvatarManagerClass {
   avatar?: Avatar;
   locomotion: Locomotion;
+  snapRotation: SnapRotation;
   params = { heightFactor: 0 };
 
   constructor(
@@ -17,6 +19,7 @@ export default class AvatarManagerClass {
     private gl: WebGLRenderer
   ) {
     this.locomotion = new Locomotion(container);
+    this.snapRotation = new SnapRotation(container);
   }
 
   load = async () => {
@@ -52,42 +55,42 @@ export default class AvatarManagerClass {
       .multiplyScalar(heightFactor);
     avatar.inputs.hmd.quaternion.copy(camera.quaternion);
 
+    // left hand
     const rightInput = getRightInput();
     if (rightInput) {
       const { pointer, grip, padX, padY, stick } = rightInput;
-      avatar.inputs.rightGamepad.pointer = pointer;
-      avatar.inputs.rightGamepad.grip = grip;
+      const leftHand = gl.vr.getController(0);
+      const avatarGamepad = avatar.inputs.leftGamepad;
 
-      const rightHand = gl.vr.getController(1);
-      avatar.inputs.rightGamepad.quaternion.copy(rightHand.quaternion);
-      const rightHandPos = new Vector3()
-        .copy(rightHand.position)
-        .sub(container.position)
-        .multiplyScalar(heightFactor);
-      avatar.inputs.rightGamepad.position.copy(rightHandPos);
-
-      locomotion.update(
-        padX,
-        padY,
-        stick,
-        avatar.inputs.hmd.quaternion,
-        avatar.height
+      avatarGamepad.pointer = pointer;
+      avatarGamepad.grip = grip;
+      avatarGamepad.quaternion.copy(leftHand.quaternion);
+      avatarGamepad.position.copy(
+        new Vector3()
+          .copy(leftHand.position)
+          .sub(container.position)
+          .multiplyScalar(heightFactor)
       );
+
+      this.snapRotation.update(padX);
     }
 
+    // left hand
     const leftInput = getLeftInput();
     if (leftInput) {
       const { pointer, grip, padX, padY } = leftInput;
-      avatar.inputs.leftGamepad.pointer = pointer;
-      avatar.inputs.leftGamepad.grip = grip;
+      const leftHand = gl.vr.getController(1);
+      const avatarGamepad = avatar.inputs.rightGamepad;
 
-      const leftHand = gl.vr.getController(0);
-      avatar.inputs.leftGamepad.quaternion.copy(leftHand.quaternion);
-      const leftHandPos = new Vector3()
-        .copy(leftHand.position)
-        .sub(container.position)
-        .multiplyScalar(heightFactor);
-      avatar.inputs.leftGamepad.position.copy(leftHandPos);
+      avatarGamepad.pointer = pointer;
+      avatarGamepad.grip = grip;
+      avatarGamepad.quaternion.copy(leftHand.quaternion);
+      avatarGamepad.position.copy(
+        new Vector3()
+          .copy(leftHand.position)
+          .sub(container.position)
+          .multiplyScalar(heightFactor)
+      );
 
       locomotion.update(
         padX,
