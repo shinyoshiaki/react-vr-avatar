@@ -21,7 +21,7 @@ export default class AvatarManagerClass {
   }
 
   load = async () => {
-    const model = await loadModel("/model2.vrm").catch(() => {});
+    const model = await loadModel("570234664353338085.vrm").catch(() => {});
     if (!model) return;
     this.container.add(model.scene);
 

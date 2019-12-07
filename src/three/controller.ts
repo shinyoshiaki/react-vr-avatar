@@ -1,6 +1,5 @@
 export function getRightInput() {
   const hand = getInput("right");
-  console.log(hand);
   if (hand) return { ...hand };
   return undefined;
 }
