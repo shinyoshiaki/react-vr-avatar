@@ -10,7 +10,7 @@ module.exports = {
   output: {
     path: dist,
     filename: "bundle.js",
-    publicPath: "/",
+    publicPath: "",
     globalObject: "self"
   },
   resolve: {
@@ -69,10 +69,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template:
-        process.env.NODE_ENV === "production"
-          ? "./public/index.prod.html"
-          : "./public/index.html",
+      template: "./public/index.html",
       favicon: "./public/favicon.ico"
     }),
     new WorkboxWebpackPlugin.GenerateSW({ swDest: dist + "/sw.js" }),
