@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 import Main from "./Main";
-import { WEBVR } from "three/examples/jsm/vr/WebVR";
+import { VRButton } from "three/examples/jsm/webxr/VRButton";
 import { Canvas as canvas } from "react-three-fiber";
 import styled from "styled-components";
 
@@ -11,7 +11,7 @@ const App: FC = () => {
       vr
       camera={{ position: [0, 0, 15] }}
       onCreated={({ gl }) => {
-        const button = WEBVR.createButton(gl);
+        const button = VRButton.createButton(gl);
         document.body.appendChild(button);
       }}
     >
