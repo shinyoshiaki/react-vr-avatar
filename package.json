@@ -20,7 +20,7 @@
     "react-dom": "^16.10.2",
     "react-three-fiber": "^3.0.13",
     "styled-components": "^4.4.1",
-    "three": "^0.111.0"
+    "three": "^0.125.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
